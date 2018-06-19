@@ -6,6 +6,7 @@ namespace CastleGrimtol.Project
     {
         string Name { get; set; }
         string Description { get; set; }
+        string Exits { get; set; }
         List<Item> Items { get; set; }
 
         void UseItem(Item item);

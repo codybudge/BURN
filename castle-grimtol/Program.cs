@@ -7,7 +7,9 @@ namespace CastleGrimtol
     {
         public static void Main(string[] args)
         {
-
+            // get player name
+            Game textGame = new Game();
+            textGame.Setup();
         }
     }
 }
