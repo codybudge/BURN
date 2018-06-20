@@ -7,9 +7,13 @@ namespace CastleGrimtol
     {
         public static void Main(string[] args)
         {
-            // get player name
+            var playing = true;
             Game textGame = new Game();
             textGame.Setup();
+            while(playing)
+            {
+                textGame.Play();
+            }
         }
     }
 }

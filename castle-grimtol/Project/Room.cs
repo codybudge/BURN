@@ -8,28 +8,33 @@ namespace CastleGrimtol.Project
 
     public string Name { get; set; }
     public string Description { get; set; }
-    public string Exits { get; set; }
-    // public string Direction { get; set; }
+    public Dictionary<string, Room> Exits { get; set; }
     public List<Item> Items { get; set; }
 
     public void UseItem(Item item)
     {
       
     }
-    public Room Go(string Description)
+    
+    public void TakeItem(string itemName)
     {
-      if (exits.ContainsKey(direction))
+      Item item = Items.Find(i => i.Name == itemName);
+    }
+    public Room Go(string direction)
+    {
+      if (Exits.ContainsKey(direction))
       {
-       Console.WriteLine(description);
-        return exits[description];
+       Console.WriteLine(direction);
+        return Exits[direction];
       }
+      return null;
     }
     public Room(string name, string description)
     {
       Name = name;
       Description = description;
-      // Exits = exits;
-      // Direction = direction; 
+      Exits = new Dictionary<string, Room>();
+     
     }
   }
 }

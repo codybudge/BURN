@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace CastleGrimtol.Project
@@ -14,6 +15,14 @@ namespace CastleGrimtol.Project
 
     public void Play()
     {
+      Console.Clear();
+      Console.WriteLine("You land on the roof of the space ship you see a stairase leading down into the ship. There is a small plate with a button on it laying on the ground");
+      
+      var choice = Console.ReadLine();
+
+
+
+
       //get user input
       //input.split(" ")
       //switch input[0]
@@ -31,6 +40,7 @@ namespace CastleGrimtol.Project
       Room room2 = new Room("Room 2", "");
       Room room3 = new Room("Room 3", "");
       Room room4 = new Room("Room 4", "");
+      room0.Items.Add(new Item("button", "a small button on a plate"));
       // Room room5 = new Room("Room 5", "");
       // Room room6 = new Room("Room 6", "");
       // Room room7 = new Room("Room 7", "");
@@ -54,8 +64,8 @@ namespace CastleGrimtol.Project
       // Room room25 = new Room("Control Room", "");
         
 
-        room0.exits.Add("down", room1);
-        room1.exits.Add("up", room0);
+        room0.Exits.Add("down", room1);
+        room1.Exits.Add("up", room0);
 
 
 
