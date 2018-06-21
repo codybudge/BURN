@@ -13,7 +13,7 @@ namespace CastleGrimtol.Project
 
     public void UseItem(Item item)
     {
-      
+
     }
     
     public void TakeItem(string itemName)
@@ -34,6 +34,7 @@ namespace CastleGrimtol.Project
       Name = name;
       Description = description;
       Exits = new Dictionary<string, Room>();
+      Items = new List<Item>();
      
     }
   }

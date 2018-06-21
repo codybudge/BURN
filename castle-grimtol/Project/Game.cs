@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using CastleGrimtol.Project;
 
 namespace CastleGrimtol.Project
 {
@@ -15,10 +16,14 @@ namespace CastleGrimtol.Project
 
     public void Play()
     {
-      Console.Clear();
-      Console.WriteLine("You land on the roof of the space ship you see a stairase leading down into the ship. There is a small plate with a button on it laying on the ground");
-      
+      // Console.Clear();
+      Console.WriteLine(CurrentRoom.Description);
+      if(CurrentRoom.Items.Count != 0)
+      {
+      System.Console.WriteLine(CurrentRoom.Items[0].Name);
+      }
       var choice = Console.ReadLine();
+      UseItem(choice);
 
 
 
@@ -36,11 +41,12 @@ namespace CastleGrimtol.Project
     public void Setup()
     {
       Room room0 = new Room("Roof", "This is the roof");
+      Item button = new Item("button", "a small button on a plate");
+      room0.Items.Add(button);
       Room room1 = new Room("Room 1", "You go down the hatch into room 1");
       Room room2 = new Room("Room 2", "");
       Room room3 = new Room("Room 3", "");
       Room room4 = new Room("Room 4", "");
-      room0.Items.Add(new Item("button", "a small button on a plate"));
       // Room room5 = new Room("Room 5", "");
       // Room room6 = new Room("Room 6", "");
       // Room room7 = new Room("Room 7", "");
@@ -64,8 +70,8 @@ namespace CastleGrimtol.Project
       // Room room25 = new Room("Control Room", "");
         
 
-        room0.Exits.Add("down", room1);
-        room1.Exits.Add("up", room0);
+        room0.Exits.Add("button",room1);
+        // room1.Exits.Add("up", room0);
 
 
 
@@ -76,7 +82,13 @@ namespace CastleGrimtol.Project
 
     public void UseItem(string itemName)
     {
-        
+        if(itemName == "button")
+        {
+          Console.Clear();
+          CurrentRoom = CurrentRoom.Go(itemName);
+          Console.Clear();
+          System.Console.WriteLine(CurrentRoom.Name);
+        }
     }
   }
 }
