@@ -20,13 +20,42 @@ namespace CastleGrimtol.Project
       Console.WriteLine(CurrentRoom.Description);
       if(CurrentRoom.Items.Count != 0)
       {
-      System.Console.WriteLine(CurrentRoom.Items[0].Name);
+        for( var i = 0; i < CurrentRoom.Items.Count; i++)
+        {
+      System.Console.WriteLine(CurrentRoom.Items[i].Name);
+        }
+    
       }
-      var choice = Console.ReadLine();
-      UseItem(choice);
-
-
-
+      var choice = Console.ReadLine().ToLower();
+      var splitChoice = choice.Split(" ");
+      switch (splitChoice[0])
+      {
+        case "go":
+        if(splitChoice.Length > 1)
+        {
+        CurrentRoom.Go(splitChoice[1]);
+        }
+        break;
+        case "take":
+        if(splitChoice.Length > 1)
+        {
+        TakeItem(splitChoice[1]);
+        }
+        break;
+        case "use":
+        if(splitChoice.Length > 1)
+        {
+        UseItem(splitChoice[1]);
+        }
+        break;
+        case "inventory":
+        if(choice == splitChoice[0])
+        {
+          CurrentPlayer.Inventory.ForEach(i => System.Console.WriteLine(i.Name +":"  + i.Description));
+          
+        }
+        break;
+      }
 
       //get user input
       //input.split(" ")
@@ -38,11 +67,15 @@ namespace CastleGrimtol.Project
       //else cw "cant go there"
     }
 
+
     public void Setup()
     {
-      Room room0 = new Room("Roof", "This is the roof");
+      Console.Clear();
+      Room room0 = new Room("Roof", "This is the roof there are items");
       Item button = new Item("button", "a small button on a plate");
+      Item fireBomb = new Item("fire bomb", "A round silver ball that you have been told will explode into fire and death!(great for parties!)");
       room0.Items.Add(button);
+      room0.Items.Add(fireBomb);
       Room room1 = new Room("Room 1", "You go down the hatch into room 1");
       Room room2 = new Room("Room 2", "");
       Room room3 = new Room("Room 3", "");
@@ -71,24 +104,33 @@ namespace CastleGrimtol.Project
         
 
         room0.Exits.Add("button",room1);
-        // room1.Exits.Add("up", room0);
+        // room1.Exits.Add("", room2);
 
 
 
         CurrentRoom = room0;
+        Player player1 = new Player("Bob");
+        CurrentPlayer = player1;
     }
 
 
 
     public void UseItem(string itemName)
     {
-        if(itemName == "button")
-        {
-          Console.Clear();
-          CurrentRoom = CurrentRoom.Go(itemName);
-          Console.Clear();
-          System.Console.WriteLine(CurrentRoom.Name);
-        }
+       if(itemName == "button")
+       {
+         CurrentRoom = CurrentRoom.Go("button");
+         System.Console.WriteLine(CurrentRoom.Name);
+       }
+    }
+    public void TakeItem(string itemName)
+    {
+      System.Console.WriteLine(itemName);
+      Item item = CurrentRoom.Items.Find(i => i.Name.Contains(itemName));
+      Console.Clear();
+      System.Console.WriteLine($"You Picked up the {item.Name} ");
+      CurrentPlayer.Inventory.Add(item);
+      CurrentRoom.Items.Remove(item);
     }
   }
 }

@@ -13,13 +13,10 @@ namespace CastleGrimtol.Project
 
     public void UseItem(Item item)
     {
-
+      
     }
     
-    public void TakeItem(string itemName)
-    {
-      Item item = Items.Find(i => i.Name == itemName);
-    }
+    
     public Room Go(string direction)
     {
       if (Exits.ContainsKey(direction))
