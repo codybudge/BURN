@@ -32,24 +32,32 @@ namespace CastleGrimtol.Project
       switch (splitChoice[0])
       {
         case "go":
+        case "Go":
+        case "g":
           if (splitChoice.Length > 1)
           {
-            CurrentRoom.Go(splitChoice[1]);
+           CurrentRoom = CurrentRoom.Go(splitChoice[1]);
           }
           break;
         case "take":
+        case "Take":
+        case "t":
           if (splitChoice.Length > 1)
           {
             TakeItem(splitChoice[1]);
           }
           break;
         case "use":
+        case "Use":
+        case "u":
           if (splitChoice.Length > 1)
           {
             UseItem(splitChoice[1]);
           }
           break;
         case "inventory":
+        case "Inventroy":
+        case "i":
           if (choice == splitChoice[0])
           {
             CurrentPlayer.Inventory.ForEach(i => System.Console.WriteLine(i.Name + ":" + i.Description));
@@ -72,13 +80,15 @@ namespace CastleGrimtol.Project
     public void Setup()
     {
       Console.Clear();
-      Room room0 = new Room("Roof", "This is the roof there are items");
+      Room room0 = new Room("The Roof", "You start in a plane. Well you really start diving out of a plane towards a strange ship that has just lanned on earth! You land on the roof of the ship. There is this strange spire about 30ft high with a large ball at the end of it, it seems to be sucking in all of the surounding clouds.");
       Item button = new Item("button", "a small button on a plate");
       Item fireBomb = new Item("fire bomb", "A round silver ball that you have been told will explode into fire and death!(great for parties!)");
+      Item sword = new Item("sword", "Your basic hero sword, not super sharp but can withstand attacks form enemys");
       room0.Items.Add(button);
       room0.Items.Add(fireBomb);
       Room room1 = new Room("Room 1", "You go down the hatch into room 1");
-      Room room2 = new Room("Room 2", "");
+      Room room2 = new Room("Room 2", "You go into room 2");
+      room2.Items.Add(sword);
       Room room3 = new Room("Room 3", "");
       Room room4 = new Room("Room 4", "");
       // Room room5 = new Room("Room 5", "");
@@ -105,7 +115,16 @@ namespace CastleGrimtol.Project
 
 
       room0.Exits.Add("button", room1);
-      // room1.Exits.Add("", room2);
+      room1.Exits.Add("south", room3);
+      room1.Exits.Add("east", room2);
+      room2.Exits.Add("west", room1);
+      room2.Exits.Add("south", room4);
+      room3.Exits.Add("north", room2);
+      room4.Exits.Add("north", room2);
+      // room4.Exits.Add("down", room5);
+      // room2.Exits.Add("", room);
+      // room2.Exits.Add("", room);
+      // room2.Exits.Add("", room);
 
 
 
@@ -115,23 +134,54 @@ namespace CastleGrimtol.Project
       Playing = true;
     }
 
+public void Look(string look)
+{
 
+}
 
     public void UseItem(string itemName)
     {
+      
       Item temp = CurrentPlayer.Inventory.Find(x => x.Name.Contains("fire bomb"));
-      if (itemName == "button" && temp.Name == "fire bomb")
+       System.Console.WriteLine(itemName == "button" && temp != null);
+      if (itemName == "button" && temp != null)
       {
         Console.WriteLine("You Die");
         Playing = false;
 
+      }
+      else if(itemName == "fire bomb")
+      {
+        System.Console.WriteLine("You look at the strange round ball in your hands. It has a small pin on it, you decide it would be a good idea to pull the pin(why...they could never find out). You can imagine what happens next. They only thing they found was a small pile of ash.....R.I.P Bob the idiot!");
+        Playing = false;
       }
       else
       {
         CurrentRoom = CurrentRoom.Go("button");
         System.Console.WriteLine(CurrentRoom.Name);
       }
-    }
+    //   switch(itemName)
+    //   {
+    //     case "button":
+        
+        
+    //   }
+    // }
+
+    // public void UseButton(string itemName)
+    // {
+    //   Item temp = CurrentPlayer.Inventory.Find(x => x.Name.Contains("fire bomb"));
+    //     System.Console.WriteLine(itemName == "button" && temp != null);
+    //    if (itemName == "button" && temp != null)
+    //    {
+    //      Console.WriteLine("You Die");
+    //      Playing = false;
+    //    }else
+    //    {
+    //      CurrentRoom = CurrentRoom.Go("button");
+    //     System.Console.WriteLine(CurrentRoom.Name);
+    //    }
+    // }
 
 
     public void TakeItem(string itemName)
