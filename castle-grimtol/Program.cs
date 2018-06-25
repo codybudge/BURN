@@ -7,10 +7,9 @@ namespace CastleGrimtol
     {
         public static void Main(string[] args)
         {
-            var playing = true;
             Game textGame = new Game();
             textGame.Setup();
-            while(playing)
+            while(textGame.Playing)
             {
                 textGame.Play();
             }

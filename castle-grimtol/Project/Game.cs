@@ -8,53 +8,54 @@ namespace CastleGrimtol.Project
   {
     public Room CurrentRoom { get; set; }
     public Player CurrentPlayer { get; set; }
+    public bool Playing { get; set; }
 
-    public void Reset()
+        public void Reset()
     {
-        
+
     }
 
     public void Play()
     {
       // Console.Clear();
       Console.WriteLine(CurrentRoom.Description);
-      if(CurrentRoom.Items.Count != 0)
+      if (CurrentRoom.Items.Count != 0)
       {
-        for( var i = 0; i < CurrentRoom.Items.Count; i++)
+        for (var i = 0; i < CurrentRoom.Items.Count; i++)
         {
-      System.Console.WriteLine(CurrentRoom.Items[i].Name);
+          System.Console.WriteLine(CurrentRoom.Items[i].Name);
         }
-    
+
       }
       var choice = Console.ReadLine().ToLower();
       var splitChoice = choice.Split(" ");
       switch (splitChoice[0])
       {
         case "go":
-        if(splitChoice.Length > 1)
-        {
-        CurrentRoom.Go(splitChoice[1]);
-        }
-        break;
+          if (splitChoice.Length > 1)
+          {
+            CurrentRoom.Go(splitChoice[1]);
+          }
+          break;
         case "take":
-        if(splitChoice.Length > 1)
-        {
-        TakeItem(splitChoice[1]);
-        }
-        break;
+          if (splitChoice.Length > 1)
+          {
+            TakeItem(splitChoice[1]);
+          }
+          break;
         case "use":
-        if(splitChoice.Length > 1)
-        {
-        UseItem(splitChoice[1]);
-        }
-        break;
+          if (splitChoice.Length > 1)
+          {
+            UseItem(splitChoice[1]);
+          }
+          break;
         case "inventory":
-        if(choice == splitChoice[0])
-        {
-          CurrentPlayer.Inventory.ForEach(i => System.Console.WriteLine(i.Name +":"  + i.Description));
-          
-        }
-        break;
+          if (choice == splitChoice[0])
+          {
+            CurrentPlayer.Inventory.ForEach(i => System.Console.WriteLine(i.Name + ":" + i.Description));
+
+          }
+          break;
       }
 
       //get user input
@@ -101,28 +102,38 @@ namespace CastleGrimtol.Project
       // Room room23 = new Room("Room 23", "");
       // Room room24 = new Room("Room 24", "");
       // Room room25 = new Room("Control Room", "");
-        
-
-        room0.Exits.Add("button",room1);
-        // room1.Exits.Add("", room2);
 
 
+      room0.Exits.Add("button", room1);
+      // room1.Exits.Add("", room2);
 
-        CurrentRoom = room0;
-        Player player1 = new Player("Bob");
-        CurrentPlayer = player1;
+
+
+      CurrentRoom = room0;
+      Player player1 = new Player("Bob");
+      CurrentPlayer = player1;
+      Playing = true;
     }
 
 
 
     public void UseItem(string itemName)
     {
-       if(itemName == "button")
-       {
-         CurrentRoom = CurrentRoom.Go("button");
-         System.Console.WriteLine(CurrentRoom.Name);
-       }
+      Item temp = CurrentPlayer.Inventory.Find(x => x.Name.Contains("fire bomb"));
+      if (itemName == "button" && temp.Name == "fire bomb")
+      {
+        Console.WriteLine("You Die");
+        Playing = false;
+
+      }
+      else
+      {
+        CurrentRoom = CurrentRoom.Go("button");
+        System.Console.WriteLine(CurrentRoom.Name);
+      }
     }
+
+
     public void TakeItem(string itemName)
     {
       System.Console.WriteLine(itemName);
