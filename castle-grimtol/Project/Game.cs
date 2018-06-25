@@ -181,7 +181,7 @@ public void Look(string look)
     //      CurrentRoom = CurrentRoom.Go("button");
     //     System.Console.WriteLine(CurrentRoom.Name);
     //    }
-    // }
+    }
 
 
     public void TakeItem(string itemName)
